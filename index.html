@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Caveat:wght@500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=7" />
+</head>
+<body>
+  <canvas id="stage"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+  <div id="scrim" class="scrim" aria-hidden="true"></div>
+  <div id="flash" class="flash" aria-hidden="true"></div>
+
+  <!-- Estrella guia -->
+  <div id="guide" class="guide" aria-hidden="true">
+    <div class="guide-glow"></div>
+    <div class="guide-body">
+      <div class="guide-face"><div class="eye"><i></i></div><div class="eye"><i></i></div></div>
+      <div class="mouth"></div>
+      <div class="cheek lc"></div><div class="cheek rc"></div>
+    </div>
+    <div class="orbit o1"><span></span></div>
+    <div class="orbit o2"><span></span></div>
+  </div>
+  <div id="bubble" class="bubble" aria-live="polite"></div>
+
+  <div class="ui">
+    <!-- ACTO 0: Despertar -->
+    <section id="wake" class="layer wake is-active">
+      <div class="wake-dot"></div>
+      <p class="wake-hint">toca para despertar la luz</p>
+    </section>
+
+    <!-- ACTO 1: Pistas (fotos como cartas que se voltean) -->
+    <section id="clues" class="layer clues">
+      <p class="clues-step" id="clues-step">pista 1 de 4</p>
+      <div class="clue-card" id="clue-card">
+        <div class="clue-face clue-front">
+          <span class="clue-seal">&#10022;</span>
+          <small>toca para revelar</small>
+        </div>
+        <div class="clue-face clue-back">
+          <div class="clue-photo"><img id="clue-img" src="" alt="" onerror="this.style.opacity=0"></div>
+          <p class="clue-hint" id="clue-hint"></p>
+        </div>
+      </div>
+      <div class="clue-dots" id="clue-dots"></div>
+      <p class="clue-tap" id="clue-tap">toca la carta</p>
+    </section>
+
+    <!-- ACTO 2: Hold (sostener) -->
+    <section id="hold-scene" class="layer hold-scene">
+      <div class="hold-hint">
+        <span class="hold-ring"></span>
+        <p class="hold-text">manten presionado</p>
+        <p class="hold-sub">y no la sueltes</p>
+      </div>
+      <p class="charge-msg" id="charge-msg"></p>
+    </section>
+
+    <!-- ACTO 4: Reveal -->
+    <section id="reveal" class="layer reveal">
+      <p class="reveal-pre" id="reveal-pre">el lugar tiene nombre</p>
+      <h2 class="reveal-title" id="reveal-title"></h2>
+      <p class="reveal-country" id="reveal-country">Sucre, Colombia</p>
+      <p class="reveal-tag" id="reveal-tag">donde el Caribe se vuelve oro</p>
+    </section>
+
+    <!-- ACTO 5: Confirmacion -->
+    <section id="confirm" class="layer confirm">
+      <p class="confirm-line" id="confirm-line"></p>
+      <span class="tap-inline" id="confirm-tap">toca para seguir</span>
+    </section>
+
+    <!-- ACTO 6: Ticket -->
+    <section id="ticket" class="layer ticket">
+      <p class="ticket-pre" id="ticket-pre">tu pase ya esta listo</p>
+      <div class="boarding-pass" id="pass">
+        <div class="bp-main">
+          <div class="bp-head"><span class="bp-airline">HORIZONTE AIRLINES</span><span class="bp-class">PRIMERA CLASE</span></div>
+          <div class="bp-route">
+            <div class="bp-point"><span class="bp-code">TU</span><span class="bp-city">donde estas hoy</span></div>
+            <div class="bp-path"><span class="bp-plane">&#9992;</span></div>
+            <div class="bp-point"><span class="bp-code">CVN</span><span class="bp-city">Covenas</span></div>
+          </div>
+          <div class="bp-grid">
+            <div><label>Pasajero</label><b id="bp-name">Manuela Rios</b></div>
+            <div><label>Fecha</label><b id="bp-date">5-8 JUN</b></div>
+            <div><label>Asiento</label><b>junto a la ventana</b></div>
+            <div><label>Acompanante</label><b>yo</b></div>
+          </div>
+        </div>
+        <div class="bp-stub"><span class="bp-stub-code">CVN</span><div class="bp-barcode"></div><span class="bp-stub-seat">vuelo sorpresa</span></div>
+      </div>
+      <button id="cta" class="cta">aceptar la sorpresa</button>
+      <p class="ticket-after" id="ticket-after">empaca liviano, el resto corre por mi cuenta</p>
+      <button class="replay" id="replay">vivirlo otra vez</button>
+    </section>
+  </div>
+
+  <svg id="charge-ring" class="charge-ring" viewBox="0 0 120 120" aria-hidden="true">
+    <circle class="ring-bg" cx="60" cy="60" r="54" />
+    <circle id="ring-fill" class="ring-fill" cx="60" cy="60" r="54" />
+  </svg>
+  <script src="script.js?v=7"></script>
+</body>
+</html>
