@@ -32,14 +32,14 @@
   const lerp=(a,b,k)=>a+(b-a)*k;
   const mix=(c1,c2,k)=>[Math.round(lerp(c1[0],c2[0],k)),Math.round(lerp(c1[1],c2[1],k)),Math.round(lerp(c1[2],c2[2],k))];
   const rgb=c=>'rgb('+c[0]+','+c[1]+','+c[2]+')';
-  const NT=[5,7,13],NM=[10,15,30],NB=[16,22,44],DT=[22,18,52],DM=[72,48,90],DB=[180,100,70];
+  const NT=[5,7,13],NM=[10,15,30],NB=[16,22,44],DT=[38,36,82],DM=[122,84,138],DB=[255,162,112];
 
   // Render
   function draw(){ tNow+=.016; ctx.clearRect(0,0,W,H); const hY=H*.52; const w=Math.min(dawn,1);
     const top=mix(NT,DT,w),mid=mix(NM,DM,w),bot=mix(NB,DB,w);
     const sky=ctx.createLinearGradient(0,0,0,sceneSea?hY:H); sky.addColorStop(0,rgb(top)); sky.addColorStop(.6,rgb(mid)); sky.addColorStop(1,rgb(bot)); ctx.fillStyle=sky; ctx.fillRect(0,0,W,sceneSea?hY:H);
     const sa=(1-w)*.9+.05; for(const s of stars){const tw=.5+Math.sin(tNow*s.sp+s.tw)*.5; ctx.globalAlpha=sa*tw*(.4+lit*.6); ctx.fillStyle='#dce8ff'; ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,7); ctx.fill();} ctx.globalAlpha=1;
-    if(sceneSea&&dawn>.02){const sR=Math.min(W,H)*.16,sY=hY-lerp(-sR*1.2,sR*.45,Math.min(1,dawn)); const g=ctx.createRadialGradient(W*.5,sY,0,W*.5,sY,sR*2.4); g.addColorStop(0,'rgba(255,220,160,'+(0.8*dawn)+')'); g.addColorStop(.25,'rgba(255,170,100,'+(.5*dawn)+')'); g.addColorStop(.6,'rgba(200,100,60,'+(.15*dawn)+')'); g.addColorStop(1,'rgba(200,100,60,0)'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(W*.5,sY,sR*2.4,0,7); ctx.fill(); ctx.fillStyle='rgba(255,230,200,'+(.85*dawn)+')'; ctx.beginPath(); ctx.arc(W*.5,sY,sR*.8,0,7); ctx.fill();}
+    if(sceneSea&&dawn>.02){const sR=Math.min(W,H)*.16,sY=hY-lerp(-sR*1.2,sR*.45,Math.min(1,dawn)); const g=ctx.createRadialGradient(W*.5,sY,0,W*.5,sY,sR*2.4); g.addColorStop(0,'rgba(255,242,214,'+(0.95*dawn)+')'); g.addColorStop(.25,'rgba(255,210,150,'+(.8*dawn)+')'); g.addColorStop(.6,'rgba(255,150,110,'+(.25*dawn)+')'); g.addColorStop(1,'rgba(255,150,110,0)'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(W*.5,sY,sR*2.4,0,7); ctx.fill(); ctx.fillStyle='rgba(255,248,232,'+dawn+')'; ctx.beginPath(); ctx.arc(W*.5,sY,sR*.92,0,7); ctx.fill();}
     if(holdActive||sceneSea) drawLine(hY);
     if(sceneSea&&seaLevel>0) drawSea(hY);
     for(let i=sparks.length-1;i>=0;i--){const p=sparks[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=.012; p.life-=p.decay; if(p.life<=0){sparks.splice(i,1);continue;} ctx.globalAlpha=p.life; ctx.fillStyle='rgba(255,'+Math.round(lerp(210,240,p.life))+','+Math.round(lerp(150,210,p.life))+',1)'; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,7); ctx.fill();} ctx.globalAlpha=1;
@@ -115,9 +115,18 @@
         clueTap.classList.add('gone');
         setTimeout(goHold, 600);
       } else {
+        // carta sale hacia la izquierda, luego entra la nueva por la derecha
         card.classList.remove('in');
-        setTimeout(()=>{loadClue(); card.style.animation='cardSwap .55s var(--ease)'; card.classList.add('in'); clueTap.textContent='toca la carta'; tick(500);},350);
-        setTimeout(()=>{card.style.animation='';},950);
+        card.classList.add('exit');
+        setTimeout(()=>{
+          card.classList.remove('exit');
+          loadClue();
+          card.style.animation='cardSwap .55s var(--ease)';
+          card.classList.add('in');
+          clueTap.textContent='toca la carta';
+          tick(500);
+        },420);
+        setTimeout(()=>{card.style.animation='';},1000);
       }
     }
   });
@@ -154,8 +163,6 @@
   function triggerReveal(){
     holdActive=false;holding=false;document.body.classList.remove('holding');
     ring.classList.remove('show');holdScene.classList.remove('is-active');chargeMsg.classList.remove('show');scrim.classList.remove('show');
-    // Ocultar la seccion de pistas si sigue visible
-    cluesSection.classList.remove('is-active');
     chime([392,523.25,659.25,783.99]);flash.classList.add('burst');if(navigator.vibrate)navigator.vibrate([18,40,120]);emitSparks(W*.5,H*.52,240,9);
     setTimeout(()=>flash.classList.remove('burst'),1100);
     sceneSea=true; const t0=performance.now(),dur=5200;
@@ -166,7 +173,6 @@
   function buildTitle(){titleEl.innerHTML='';DEST_DISPLAY.split('').forEach(c=>{const s=document.createElement('span');s.className='ch';s.textContent=c;titleEl.appendChild(s);});}
   function startName(){
     reveal.classList.add('is-active');buildTitle();
-    scrim.classList.add('show');
     const pre=qs('#reveal-pre'),country=qs('#reveal-country'),tag=qs('#reveal-tag');
     setTimeout(()=>pre.classList.add('in'),600);
     const chars=qsa('#reveal-title .ch');
@@ -192,36 +198,16 @@
 
   // --- INPUT ---
   let started=false;
-  function wakeUp(){
-    if(started)return;started=true;
-    wake.classList.remove('is-active');
-    initAudio();if(AC&&AC.state==='suspended')AC.resume();
-    soundHint.classList.add('hide');
-    emitSparks(W*.5,H*.5,60,6,40);chime([440,554,659]);
-    if(navigator.vibrate)navigator.vibrate(20);
-    setTimeout(intro1,900);
-  }
+  function wakeUp(){if(started)return;started=true;initAudio();if(AC&&AC.state==='suspended')AC.resume();soundHint.classList.add('hide');emitSparks(W*.5,H*.5,60,6,40);chime([440,554,659]);if(navigator.vibrate)navigator.vibrate(20);setTimeout(intro1,900);}
 
-  let lastTap=0;
-  function handleDown(e){
-    const now=Date.now();
-    if(now-lastTap<350)return;
-    lastTap=now;
+  document.addEventListener('pointerdown',e=>{
     if(!started){wakeUp();return;}
     if(holdActive){holding=true;document.body.classList.add('holding');return;}
     if(tryConfirmAdvance())return;
     if(canTap&&onTap){const fn=onTap;setTap(null);fn();}
-  }
-  function handleUp(){if(holdActive){holding=false;document.body.classList.remove('holding');}}
-
-  document.addEventListener('pointerdown',handleDown);
-  document.addEventListener('pointerup',handleUp);
-  document.addEventListener('pointercancel',handleUp);
-  document.addEventListener('touchstart',handleDown,{passive:true});
-  document.addEventListener('touchend',handleUp,{passive:true});
-  document.addEventListener('click',handleDown);
-  document.addEventListener('mouseup',handleUp);
-
+  });
+  document.addEventListener('pointerup',()=>{if(holdActive){holding=false;document.body.classList.remove('holding');}});
+  document.addEventListener('pointercancel',()=>{if(holdActive){holding=false;document.body.classList.remove('holding');}});
   addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();if(holdActive)holding=true;else if(!started)wakeUp();else if(canTap&&onTap){const fn=onTap;setTap(null);fn();}}});
   addEventListener('keyup',e=>{if(e.code==='Space'&&holdActive)holding=false;});
   addEventListener('load',()=>{setTimeout(()=>soundHint.classList.add('show'),800);});
