@@ -192,16 +192,36 @@
 
   // --- INPUT ---
   let started=false;
-  function wakeUp(){if(started)return;started=true;initAudio();if(AC&&AC.state==='suspended')AC.resume();soundHint.classList.add('hide');emitSparks(W*.5,H*.5,60,6,40);chime([440,554,659]);if(navigator.vibrate)navigator.vibrate(20);setTimeout(intro1,900);}
+  function wakeUp(){
+    if(started)return;started=true;
+    wake.classList.remove('is-active');
+    initAudio();if(AC&&AC.state==='suspended')AC.resume();
+    soundHint.classList.add('hide');
+    emitSparks(W*.5,H*.5,60,6,40);chime([440,554,659]);
+    if(navigator.vibrate)navigator.vibrate(20);
+    setTimeout(intro1,900);
+  }
 
-  document.addEventListener('pointerdown',e=>{
+  let lastTap=0;
+  function handleDown(e){
+    const now=Date.now();
+    if(now-lastTap<350)return;
+    lastTap=now;
     if(!started){wakeUp();return;}
     if(holdActive){holding=true;document.body.classList.add('holding');return;}
     if(tryConfirmAdvance())return;
     if(canTap&&onTap){const fn=onTap;setTap(null);fn();}
-  });
-  document.addEventListener('pointerup',()=>{if(holdActive){holding=false;document.body.classList.remove('holding');}});
-  document.addEventListener('pointercancel',()=>{if(holdActive){holding=false;document.body.classList.remove('holding');}});
+  }
+  function handleUp(){if(holdActive){holding=false;document.body.classList.remove('holding');}}
+
+  document.addEventListener('pointerdown',handleDown);
+  document.addEventListener('pointerup',handleUp);
+  document.addEventListener('pointercancel',handleUp);
+  document.addEventListener('touchstart',handleDown,{passive:true});
+  document.addEventListener('touchend',handleUp,{passive:true});
+  document.addEventListener('click',handleDown);
+  document.addEventListener('mouseup',handleUp);
+
   addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();if(holdActive)holding=true;else if(!started)wakeUp();else if(canTap&&onTap){const fn=onTap;setTap(null);fn();}}});
   addEventListener('keyup',e=>{if(e.code==='Space'&&holdActive)holding=false;});
   addEventListener('load',()=>{setTimeout(()=>soundHint.classList.add('show'),800);});
