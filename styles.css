@@ -107,19 +107,22 @@ body{font-family:var(--sans);color:var(--mist);position:fixed;inset:0;user-selec
 .boarding-pass{display:flex;width:min(92vw,520px);border-radius:18px;overflow:hidden;background:linear-gradient(135deg,rgba(20,28,48,.93),rgba(12,18,34,.93));border:1px solid rgba(207,228,255,.16);box-shadow:0 40px 100px rgba(0,0,0,.7);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);opacity:0;transform:translateY(50px) scale(.9) rotateX(12deg);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease);}.boarding-pass.in{opacity:1;transform:none;}
 .bp-main{flex:1;padding:clamp(16px,4vw,24px);text-align:left;min-width:0;}
 .bp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:8px;}
-.bp-airline{font-size:10px;letter-spacing:.22em;color:var(--gold);}
-.bp-class{font-size:9px;letter-spacing:.18em;color:var(--mist-soft);border:1px solid rgba(255,217,160,.4);padding:3px 8px;border-radius:100px;white-space:nowrap;}
+.bp-airline{font-size:13px;font-weight:600;letter-spacing:.14em;color:var(--gold);display:flex;align-items:center;gap:7px;}
+.bp-buslogo{font-size:20px;}
+.bp-class{font-size:9px;letter-spacing:.18em;color:var(--mist-soft);border:1px solid rgba(255,217,160,.4);padding:4px 9px;border-radius:100px;white-space:nowrap;}
 .bp-route{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
 .bp-point{display:flex;flex-direction:column;gap:3px;}
 .bp-code{font-family:var(--serif);font-weight:600;font-size:clamp(26px,8vw,40px);color:#fff;line-height:1;}
 .bp-city{font-size:10px;letter-spacing:.12em;color:var(--mist-soft);text-transform:uppercase;}
-.bp-path{flex:1;position:relative;height:1px;background:linear-gradient(90deg,transparent,rgba(207,228,255,.4),transparent);}
-.bp-plane{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:var(--aqua);font-size:16px;}
+.bp-path{flex:1;position:relative;display:flex;align-items:center;justify-content:center;gap:6px;}
+.bp-path::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;background:repeating-linear-gradient(90deg,rgba(207,228,255,.4) 0 6px,transparent 6px 12px);}
+.bp-dot{width:6px;height:6px;border-radius:50%;background:var(--aqua);position:relative;z-index:1;box-shadow:0 0 8px rgba(127,230,223,.8);}
+.bp-bus{position:relative;z-index:1;font-size:22px;background:linear-gradient(135deg,rgba(20,28,48,1),rgba(12,18,34,1));padding:0 6px;}
 .bp-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;}
 .bp-grid label{display:block;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--mist-soft);margin-bottom:3px;}
 .bp-grid b{font-family:var(--sans);font-weight:500;font-size:13px;color:var(--mist);}
 .bp-stub{width:clamp(70px,18vw,96px);flex-shrink:0;border-left:2px dashed rgba(207,228,255,.3);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:clamp(14px,3.5vw,22px) 8px;gap:10px;background:rgba(255,255,255,.03);}
-.bp-stub-code{font-family:var(--serif);font-weight:600;font-size:clamp(18px,5vw,26px);color:var(--gold);}
+.bp-stub-label{font-family:var(--serif);font-weight:600;font-size:clamp(15px,4vw,20px);letter-spacing:.12em;color:var(--gold);}
 .bp-barcode{flex:1;width:100%;min-height:50px;background:repeating-linear-gradient(90deg,#cfe4ff 0 2px,transparent 2px 4px,#cfe4ff 4px 5px,transparent 5px 9px);opacity:.7;border-radius:2px;}
 .bp-stub-seat{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--mist-soft);text-align:center;}
 .cta{cursor:pointer;padding:16px 40px;border-radius:100px;border:1px solid rgba(255,217,160,.5);background:linear-gradient(180deg,rgba(255,217,160,.2),rgba(255,157,122,.12));color:var(--gold);font-family:var(--sans);font-size:13px;letter-spacing:.28em;text-transform:uppercase;transition:transform .4s var(--ease),box-shadow .4s,color .4s;opacity:0;transform:translateY(14px);}.cta.in{opacity:1;transform:none;}.cta:active{transform:scale(.96);}.cta.done{border-color:var(--aqua);color:var(--aqua);background:linear-gradient(180deg,rgba(127,230,223,.16),rgba(127,230,223,.08));}

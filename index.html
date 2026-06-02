@@ -46,7 +46,7 @@
           <small>toca para revelar</small>
         </div>
         <div class="clue-face clue-back">
-          <div class="clue-photo"><img id="clue-img" src="" alt="" onerror="this.style.opacity=0"></div>
+          <div class="clue-photo"><img id="clue-img" alt=""></div>
           <p class="clue-hint" id="clue-hint"></p>
         </div>
       </div>
@@ -80,23 +80,26 @@
 
     <!-- ACTO 6: Ticket -->
     <section id="ticket" class="layer ticket">
-      <p class="ticket-pre" id="ticket-pre">tu pase ya esta listo</p>
+      <p class="ticket-pre" id="ticket-pre">tu pasaje ya esta listo</p>
       <div class="boarding-pass" id="pass">
         <div class="bp-main">
-          <div class="bp-head"><span class="bp-airline">HORIZONTE AIRLINES</span><span class="bp-class">PRIMERA CLASE</span></div>
+          <div class="bp-head">
+            <span class="bp-airline"><span class="bp-buslogo">&#128652;</span> RUTA AL CARIBE</span>
+            <span class="bp-class">TIQUETE DE BUS</span>
+          </div>
           <div class="bp-route">
-            <div class="bp-point"><span class="bp-code">TU</span><span class="bp-city">donde estas hoy</span></div>
-            <div class="bp-path"><span class="bp-plane">&#9992;</span></div>
+            <div class="bp-point"><span class="bp-code">TU</span><span class="bp-city">MEDELLÍN</span></div>
+            <div class="bp-path"><span class="bp-dot"></span><span class="bp-bus">&#128652;</span><span class="bp-dot"></span></div>
             <div class="bp-point"><span class="bp-code">CVN</span><span class="bp-city">Covenas</span></div>
           </div>
           <div class="bp-grid">
-            <div><label>Pasajero</label><b id="bp-name">Manuela Ríos</b></div>
-            <div><label>Fecha</label><b id="bp-date">12 - 15 JUN</b></div>
-            <div><label>Asiento</label><b>Junto a la ventana</b></div>
+            <div><label>Pasajero</label><b id="bp-name">Tu</b></div>
+            <div><label>Fecha de salida</label><b id="bp-date">5 - 8 JUN</b></div>
+            <div><label>Asiento</label><b>junto a la ventana</b></div>
             <div><label>Acompanante</label><b>yo</b></div>
           </div>
         </div>
-        <div class="bp-stub"><span class="bp-stub-code">CVN</span><div class="bp-barcode"></div><span class="bp-stub-seat">vuelo sorpresa</span></div>
+        <div class="bp-stub"><span class="bp-stub-label">BUS</span><div class="bp-barcode"></div><span class="bp-stub-seat">viaje sorpresa</span></div>
       </div>
       <button id="cta" class="cta">aceptar la sorpresa</button>
       <p class="ticket-after" id="ticket-after">empaca liviano, el resto corre por mi cuenta</p>

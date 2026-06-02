@@ -72,10 +72,10 @@
 
   // --- PISTAS: cartas que se voltean, una a una ---
   const CLUES = [
-    {img:'images/foto-1.jpg', hint:'donde el tiempo se detiene'},
-    {img:'images/foto-2.jpg', hint:'donde todo brilla sin filtro'},
-    {img:'images/foto-3.jpg', hint:'donde se respira diferente'},
-    {img:'images/foto-4.jpg', hint:'donde quiero llevarte'}
+    {img:'images/1.png', hint:'donde el tiempo se detiene'},
+    {img:'images/2.png', hint:'donde todo brilla sin filtro'},
+    {img:'images/3.png', hint:'donde se respira diferente'},
+    {img:'images/4.png', hint:'donde encuentras paz'}
   ];
   let clueIdx = 0;
   const card = qs('#clue-card'), clueImg = qs('#clue-img'), clueHint = qs('#clue-hint');
@@ -95,6 +95,7 @@
   }
   function loadClue(){
     card.classList.remove('flipped');
+    clueImg.style.opacity = '1';
     clueImg.src = CLUES[clueIdx].img;
     clueHint.textContent = CLUES[clueIdx].hint;
     clueStep.textContent = 'pista '+(clueIdx+1)+' de '+CLUES.length;
@@ -132,7 +133,7 @@
   });
 
   // --- HOLD ---
-  const HOLD_MSGS=[{at:0,txt:''},{at:.18,txt:'Cierra los ojos...'},{at:.42,txt:'Respira. <span class="accent">Sigue sosteniendo.</span>'},{at:.66,txt:'Lo estas logrando...'},{at:.86,txt:'<span class="accent">No me sueltes. Ya casi.</span>'}];
+  const HOLD_MSGS=[{at:0,txt:''},{at:.18,txt:'Respira hondo...'},{at:.42,txt:'Quedate quieto. <span class="accent">Sigue sosteniendo.</span>'},{at:.66,txt:'Lo estas logrando...'},{at:.86,txt:'<span class="accent">No me sueltes. Ya casi.</span>'}];
   let lastHM=-1;
   function goHold(){
     cluesSection.classList.remove('is-active');
