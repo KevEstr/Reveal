@@ -192,9 +192,8 @@
   function tryConfirmAdvance(){if(confirmScene.classList.contains('is-active')&&cfReady&&!cfLocked){nextConfirm();return true;}return false;}
 
   // --- TICKET ---
-  function goTicket(){confirmScene.classList.remove('is-active');setTimeout(()=>{ticket.classList.add('is-active');qs('#ticket-pre').classList.add('in');setTimeout(()=>{qs('#pass').classList.add('in');chime([523,659,784,1047]);},700);setTimeout(()=>cta.classList.add('in'),1700);setTimeout(()=>{qs('#ticket-after').classList.add('in');qs('#replay').classList.add('in');},2400);},1100);}
+  function goTicket(){confirmScene.classList.remove('is-active');setTimeout(()=>{ticket.classList.add('is-active');qs('#ticket-pre').classList.add('in');setTimeout(()=>{qs('#pass').classList.add('in');chime([523,659,784,1047]);},700);setTimeout(()=>cta.classList.add('in'),1700);setTimeout(()=>{qs('#ticket-after').classList.add('in');},2400);},1100);}
   cta.addEventListener('pointerdown',e=>{e.stopPropagation();if(cta.classList.contains('done'))return;cta.textContent='nos vemos alla \u2726';cta.classList.add('done');qs('#ticket-after').textContent='cuenta los dias conmigo.';emitSparks(W*.5,H*.5,120,7,W);chime([659,784,988,1319]);if(navigator.vibrate)navigator.vibrate(40);});
-  qs('#replay').addEventListener('pointerdown',e=>{e.stopPropagation();location.reload();});
 
   // --- INPUT ---
   let started=false;
